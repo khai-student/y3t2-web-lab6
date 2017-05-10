@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9168806a-a0b4-47b5-9eb5-060c2f929a12" name="PHP" url="http://lab5">
+        <fileTransfer port="0" mountedRoot="C:\Program Files\Open Server Basic\OpenServer\modules\php\PHP-5.6-x64" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</project>
