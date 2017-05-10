@@ -58,4 +58,18 @@ class Utilities
         
         die();
     }
+
+    public function error($error_msg, $debug_msg = '')
+    {
+        if ($route == null) {
+            $controller = new ErrorController();
+
+            if (DEBUG_MODE && $debug_msg != '') {
+                $controller->printError($error_msg, $debug_msg);
+            } else {
+                $controller->printError($error_msg);
+            }
+            die();
+        }
+    }
 }

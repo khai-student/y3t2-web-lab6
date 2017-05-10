@@ -30,6 +30,7 @@ echo '
     </li>
 ';
 
+$sections = $db->Select('SELECT section.name FROM public.section;');
 if (count($sections) > 0)
 {
     foreach ($sections as $section)

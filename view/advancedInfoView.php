@@ -4,7 +4,7 @@ class AdvancedInfoView extends Object implements IView
 {
     function Render()
     { 
-        require_once 'include/headerAdvancedInfoView.php';
+        require_once 'include/header.php';
 
         echo '
             <div class="services">
@@ -36,7 +36,7 @@ class AdvancedInfoView extends Object implements IView
             </div>
             ';
 
-        require_once 'include/footerAdvancedInfoView.php';
+        require_once 'include/footer.php';
     }
 }
 

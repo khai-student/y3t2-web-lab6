@@ -52,6 +52,12 @@ class Session extends Object
 
     public function end()
     {
+        if (!$this->isAuthorized())
+        {
+            throw new Exception("Session cannot be closed because you not signed in.");
+            return;
+        }
+
         $db->Insert(
             "DELETE FROM public.session
             WHERE session_id = '".$db->RealEscapeString(session_id())."';"

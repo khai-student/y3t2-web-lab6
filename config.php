@@ -6,7 +6,7 @@ define( "DB_PORT", "3306" );
 define( "DB_DBNAME", "mysql" );
 define( "DB_USERNAME", "root" );
 define( "DB_PASSWORD", "root" );
-define( "TEMPLATE_PATH", "templates" );
+define( "DEBUG_MODE", true );
 
 spl_autoload_register(function ($class_name) {
     if (strpos($class_name, 'Controller') !== false) {

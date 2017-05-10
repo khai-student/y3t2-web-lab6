@@ -4,7 +4,7 @@ class SectionView extends Object implements IView
 {
     function Render()
     { 
-        require_once 'include/headerSectionView.php';
+        require_once 'include/header.php';
 
         echo '
         <div class="portfolio">
@@ -29,7 +29,7 @@ class SectionView extends Object implements IView
         }
         echo '</ul></div>';
 
-        require_once 'include/footerSectionView.php';
+        require_once 'include/footer.php';
     }
 }
 ?>

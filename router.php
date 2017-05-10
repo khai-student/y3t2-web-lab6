@@ -1,20 +1,6 @@
 <?php
 require_once 'config.php';
 
-function Error($error_msg, $debug_msg = '')
-{
-    if ($route == null) {
-        $controller = new ErrorController();
-
-        if ($debug_msg != '') {
-            $controller->printError($error_msg, $debug_msg);
-        } else {
-            $controller->printError($error_msg);
-        }
-        die();
-    }
-}
-
 global $utilities;
 // controller to activate
 $controller = null;
@@ -33,23 +19,23 @@ if ($route == null)
 $route = explode('/', $route);
 if (count($route) != 2) Error('400 Wrong route');
 
-switch ($route[0]) // controller name
+switch (strtolower($route[0])) // controller name
 {
     case 'section':
         $controller = new SectionController();
         break;
-    case 'advancedInfo':
+    case 'advancedinfo':
         $controller = new AdvancedInfoController();
         break;
     case 'auth':
         $controller = new AuthController();
         break;
     default:
-        Error('400 Wrong route');
+        $utilities->error('400 Wrong route');
         break;
 }
 
-switch ($route[1]) // action
+switch (strtolower($route[1])) // action
 {
     case 'index':
         $action = 'actionIndex';
@@ -62,11 +48,29 @@ switch ($route[1]) // action
         }
         if (!$session->isAdmin()) 
         {
-            Error('400 Access not granted.');
+            $utilities->error('400 Access not granted.');
         }
         $action = 'actionEdit';
+    case 'signin':
+        if (strtolower($route[0]) == 'auth')
+            $action = 'actionSignIn';
+        else
+            $action = 'actionIndex';
+        break;
+    case 'signup':
+        if (strtolower($route[0]) == 'auth')
+            $action = 'actionSignUp';
+        else
+            $action = 'actionIndex';
+        break;
+    case 'signout':
+        if (strtolower($route[0]) == 'auth')
+            $action = 'actionSignOut';
+        else
+            $action = 'actionIndex';
+        break;
     default:
-        $action = $route[1];
+        $utilities->error("Don't touch URL!");
         break;
 }
 
@@ -82,7 +86,7 @@ try
 }
 catch (Exception $e)
 {
-    Error('500 Internal server error', $e->GetMessage());
+    $utilities->error('500 Internal server error', $e->GetMessage());
 }
 die();
 
