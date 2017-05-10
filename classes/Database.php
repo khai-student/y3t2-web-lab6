@@ -9,20 +9,9 @@
 class Database
 {
     private $mysqli = null;
-    private $host = "localhost";
-    private $port = "3306";
-    private $db_name = "mysql";
-    private $db_user = "root";
-    private $password = "root";
 
-    public function __construct($host = "", $port = "", $db_name = "", $db_user = "", $password = "")
+    public function __construct()
     {
-        $this->host = ($host != "") ? $host : $this->host;
-        $this->port = ($port != "") ? $port : $this->port;
-        $this->db_name = ($db_name != "") ? $db_name : $this->db_name;
-        $this->db_user = ($db_user != "") ? $db_user : $this->db_user;
-        $this->password = ($password != "") ? $password : $this->password;
-
         $this->Connect();
     }
 
@@ -32,7 +21,7 @@ class Database
     }
 
     private function Connect() {
-        $this->mysqli = new mysqli($this->host.':'.$this->port, $this->db_user, $this->password, $this->db_name);
+        $this->mysqli = new mysqli(DB_HOST.':'.DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DBNAME);
         if ($this->mysqli->connect_error)
         {
             Debug::Error('Error : ('. $this->mysqli->connect_errno .') '. $this->mysqli->connect_error);

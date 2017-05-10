@@ -1,13 +1,11 @@
 <?php
 ini_set( "display_errors", true );
 date_default_timezone_set( "Europe/Kiev" );  // http://www.php.net/manual/en/timezones.php
-define( "DB_DSN", "mysql:host=localhost;dbname=mysql" );
-define( "DB_IP", "localhost" );
+define( "DB_HOST", "localhost" );
 define( "DB_PORT", "5432" );
 define( "DB_DBNAME", "mysql" );
 define( "DB_USERNAME", "root" );
 define( "DB_PASSWORD", "root" );
-define( "CLASS_PATH", "classes" );
 define( "TEMPLATE_PATH", "templates" );
 define( "ADMIN_USERNAME", "admin" );
 define( "ADMIN_PASSWORD", "admin" );
@@ -35,4 +33,5 @@ function handleException( $exception ) {
 set_exception_handler( 'handleException' );
 
 $db = new Database();
+$session = new Session();
 ?>
