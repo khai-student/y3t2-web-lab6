@@ -4,6 +4,12 @@ class Session extends Object
 {
     public function start($username, $password)
     {
+        if ($this->isAuthorized())
+        {
+            throw new Exception("Already authorized.");
+            return;
+        }
+
         global $db;
 
         if ($username == '' || $password = '') 
@@ -89,7 +95,7 @@ class Session extends Object
 
     public function isAdmin()
     {
-        if (!isAuthorized()) {
+        if (!$this->isAuthorized()) {
             return false;
         }
         

@@ -35,4 +35,27 @@ class Utilities
 
         return $result;
     }
+
+    public function headerLocation($location)
+    {
+        global $session;
+
+        if ($session->isAuthorized())
+        {
+            if (strpos($location, '?') === false)
+            {
+                $location = $location.'?'.session_name().'='.session_id();
+            }
+            else
+            {
+                $location = $location.'&'.session_name().'='.session_id();
+            }
+        }
+        else
+        {
+            header($location);
+        }
+        
+        die();
+    }
 }

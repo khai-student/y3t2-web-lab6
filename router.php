@@ -15,21 +15,19 @@ function Error($error_msg, $debug_msg = '')
     }
 }
 
-$tools = new Utilities();
-
+global $utilities;
 // controller to activate
 $controller = null;
 // action to choose
 $action = null;
 // other passed parameters
-$params = $tools->GetAllParams();
+$params = $utilities->GetAllParams();
 
 //
-$route = $tools->GetParam('r', null);
+$route = $utilities->GetParam('r', null);
 if ($route == null)
 {
-     header('Location: router.php?r=section/index&section=strings');
-     die();
+     $utilities->headerLocation('Location: router.php?r=section/index&section=strings');
 }
 // if route is passed  
 $route = explode('/', $route);
@@ -58,13 +56,14 @@ switch ($route[1]) // action
         break;
     case 'edit':
         global $session;
-        
         if (!$session->isAuthorized())
         {
-            header("Location: router.php?r=auth/login");
-            die();
+            $utilities->headerLocation("Location: router.php?r=auth/login");
         }
-        if (!$session->isAdmin()) Error('400 Access not granted.');
+        if (!$session->isAdmin()) 
+        {
+            Error('400 Access not granted.');
+        }
         $action = 'actionEdit';
     default:
         $action = $route[1];

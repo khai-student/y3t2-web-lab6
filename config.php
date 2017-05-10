@@ -2,13 +2,11 @@
 ini_set( "display_errors", true );
 date_default_timezone_set( "Europe/Kiev" );  // http://www.php.net/manual/en/timezones.php
 define( "DB_HOST", "localhost" );
-define( "DB_PORT", "5432" );
+define( "DB_PORT", "3306" );
 define( "DB_DBNAME", "mysql" );
 define( "DB_USERNAME", "root" );
 define( "DB_PASSWORD", "root" );
 define( "TEMPLATE_PATH", "templates" );
-define( "ADMIN_USERNAME", "admin" );
-define( "ADMIN_PASSWORD", "admin" );
 
 spl_autoload_register(function ($class_name) {
     if (strpos($class_name, 'Controller') !== false) {
@@ -34,4 +32,5 @@ set_exception_handler( 'handleException' );
 
 $db = new Database();
 $session = new Session();
+$utilities = new Utilities();
 ?>
