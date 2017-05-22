@@ -50,10 +50,7 @@ if ($session->isAdmin())
         <a href="#"></a>
     </li>
     <li>
-        <a href="/router.php?r=section/edit">Edit sections</a>
-    </li>
-    <li>
-        <a href="/router.php?r=news/edit">Edit news</a>
+        <a href="/router.php?r=admin/index">Edit content</a>
     </li>
     ';
 }

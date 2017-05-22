@@ -30,6 +30,9 @@ switch (strtolower($route[0])) // controller name
     case 'auth':
         $controller = new AuthController();
         break;
+    case 'admin':
+        $controller = new AdminController();
+        break;
     default:
         $utilities->error('400 Wrong route');
         break;
@@ -44,11 +47,15 @@ switch (strtolower($route[1])) // action
         global $session;
         if (!$session->isAuthorized())
         {
-            $utilities->headerLocation('/router.php', ['r' => 'auth/login']);
+            $utilities->headerLocation('/router.php', ['r' => 'auth/signin']);
         }
         if (!$session->isAdmin()) 
         {
             $utilities->error('400 Access not granted.');
+        }
+        if (is_a($controller, 'AdminController') == false)
+        {
+            $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
         }
         $action = 'actionEdit';
     case 'signin':

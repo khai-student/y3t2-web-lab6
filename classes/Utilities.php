@@ -93,9 +93,9 @@ class Utilities
         $controller = new ErrorController();
 
         if (DEBUG_MODE && $debug_msg != '') {
-            $controller->printError($error_msg, $debug_msg);
+            $controller->actionPrintError($error_msg, $debug_msg);
         } else {
-            $controller->printError($error_msg);
+            $controller->actionPrintError($error_msg);
         }
         die();
     }
