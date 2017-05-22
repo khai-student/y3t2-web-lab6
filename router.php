@@ -31,6 +31,15 @@ switch (strtolower($route[0])) // controller name
         $controller = new AuthController();
         break;
     case 'admin':
+        global $session;
+        if (!$session->isAuthorized())
+        {
+            $utilities->headerLocation('/router.php', ['r' => 'auth/signin']);
+        }
+        if (!$session->isAdmin()) 
+        {
+            $utilities->error('400 Access not granted.');
+        }
         $controller = new AdminController();
         break;
     default:
@@ -44,15 +53,6 @@ switch (strtolower($route[1])) // action
         $action = 'actionIndex';
         break;
     case 'edit':
-        global $session;
-        if (!$session->isAuthorized())
-        {
-            $utilities->headerLocation('/router.php', ['r' => 'auth/signin']);
-        }
-        if (!$session->isAdmin()) 
-        {
-            $utilities->error('400 Access not granted.');
-        }
         if (is_a($controller, 'AdminController') == false)
         {
             $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
@@ -75,6 +75,12 @@ switch (strtolower($route[1])) // action
             $action = 'actionSignOut';
         else
             $action = 'actionIndex';
+        break;
+    case 'delete':
+        $action = 'actionDelete';
+        break;
+    case 'edit':
+        $action = 'actionEdit';
         break;
     default:
         $utilities->error("Don't touch URL!");

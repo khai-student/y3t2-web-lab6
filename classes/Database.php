@@ -58,6 +58,10 @@ class Database
         return $this->mysqli->query($sql);
     }
 
+    public function Exec($sql) {
+        return $this->mysqli->query($sql);
+    }
+
     public function RealEscapeString($string) {
         if ($this->mysqli == null)
         {

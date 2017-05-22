@@ -8,7 +8,7 @@ define( "DB_USERNAME", "root" );
 define( "DB_PASSWORD", "root" );
 define( "DEBUG_MODE", true );
 define( "PASSWORD_SALT", "49e5823e-be31-4917-aa2e-48a38f3ce3fe" );
-define( "PAGE_SIZE", 10 );
+define( "PAGE_SIZE", 50 );
 
 spl_autoload_register(function ($class_name) {
     if (strpos($class_name, 'Controller') !== false) {
