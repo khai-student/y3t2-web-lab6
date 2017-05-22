@@ -7,5 +7,3 @@ interface IView
     */
     public function Render();
 }
-
-?>

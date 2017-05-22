@@ -13,7 +13,7 @@ $params = $utilities->GetAllParams();
 $route = $utilities->GetParam('r', null);
 if ($route == null)
 {
-     $utilities->headerLocation('Location: router.php?r=section/index&section=strings');
+     $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
 }
 // if route is passed  
 $route = explode('/', $route);
@@ -44,7 +44,7 @@ switch (strtolower($route[1])) // action
         global $session;
         if (!$session->isAuthorized())
         {
-            $utilities->headerLocation("Location: router.php?r=auth/login");
+            $utilities->headerLocation('/router.php', ['r' => 'auth/login']);
         }
         if (!$session->isAdmin()) 
         {
@@ -79,6 +79,13 @@ foreach ($params as $param => $value) {
     if ($param == 'r') continue;
     $controller->$param = $value;
 }
+// deleting POST array on server side
+if ($action != 'actionSignIn' && $action != 'actionSignUp') {
+    if (isset($_SESSION['POST']))
+    {
+        unset($_SESSION['POST']);
+    }
+}
 
 try
 {
@@ -89,5 +96,3 @@ catch (Exception $e)
     $utilities->error('500 Internal server error', $e->GetMessage());
 }
 die();
-
-?>

@@ -19,7 +19,7 @@ else
 {
 echo '
     <li>
-        <a href="/router.php?r=news/signIn">Sign In</a>
+        <a href="/router.php?r=auth/signIn">Sign In</a>
     </li>
 ';
 }

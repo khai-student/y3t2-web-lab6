@@ -13,22 +13,28 @@ class AuthController extends Object
         global $utilities;
         // 
 
+        if ($session->isAuthorized())
+        {
+            $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
+        }
+
         if ($this->login == null && $this->password == null) {
             $view = new SignInView();
+            $view->data = $this->data;
             $view->Render();
             die();
         }
         // if authorization is queried
         try
         {
-            $session->start($username, $password);
+            $session->start($this->login, $this->password);
         }
         catch (Exception $e)
         {
-            $utilities->error($e->GetMessage());
+            $utilities->headerLocation('/router.php', ['r' => 'auth/signin', 'error_message' => $e->GetMessage()]);
         }
 
-        $utilities->headerLocation('Location: /router.php?r=section/index&section=strings');
+        $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
     }
 
     public function actionSignOut() // logout
@@ -45,7 +51,7 @@ class AuthController extends Object
             $utilities->error($e->GetMessage());
         }
 
-        $utilities->headerLocation('Location: /router.php?r=section/index&section=strings');
+        $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
     }
 
     public function actionSignUp() // registration
@@ -64,10 +70,11 @@ class AuthController extends Object
                 die();
             }
         }
+        $password_encrypted = password_hash($this->password, PASSWORD_DEFAULT);
         $sql = "
             INSERT INTO public.user (login, password, first_name, second_name, email, is_admin) VALUES
             ('".$db->RealEscapeString($this->login)."',
-            '".$db->RealEscapeString($this->password)."',
+            '".$db->RealEscapeString($password_encrypted)."',
             '".$db->RealEscapeString($this->first_name)."',
             '".$db->RealEscapeString($this->second_name)."',
             '".$db->RealEscapeString($this->email)."',
@@ -80,15 +87,13 @@ class AuthController extends Object
         //
         try
         {
-            $session->start();
+            $session->start($this->login, $this->password);
         }
         catch (Exception $e)
         {
             $utilities->error($e->GetMessage());
         }
         // 
-        $utilities->headerLocation('Location: /router.php?r=section/index&section=strings');
+        $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
     }
 }
-
-?>

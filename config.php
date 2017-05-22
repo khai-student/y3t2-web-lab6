@@ -7,19 +7,20 @@ define( "DB_DBNAME", "mysql" );
 define( "DB_USERNAME", "root" );
 define( "DB_PASSWORD", "root" );
 define( "DEBUG_MODE", true );
+define( "PASSWORD_SALT", "49e5823e-be31-4917-aa2e-48a38f3ce3fe" );
 
 spl_autoload_register(function ($class_name) {
     if (strpos($class_name, 'Controller') !== false) {
-        include '/controllers/' . lcfirst ($class_name) . '.php';
+        require_once '/controllers/' . lcfirst ($class_name) . '.php';
     }
     elseif (strpos($class_name, 'Model') !== false) {
-        include '/models/' . lcfirst ($class_name) . '.php';
+        require_once '/models/' . lcfirst ($class_name) . '.php';
     }
     elseif (strpos($class_name, 'View') !== false) {
-        include '/view/' . lcfirst ($class_name) . '.php';
+        require_once '/view/' . lcfirst ($class_name) . '.php';
     }
     else {
-        include '/classes/' . $class_name . '.php';
+        require_once '/classes/' . $class_name . '.php';
     }
 });
 

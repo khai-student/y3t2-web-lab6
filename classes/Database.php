@@ -17,7 +17,14 @@ class Database
 
     public function __destruct()
     {
-        $this->Disconnect();
+        try
+        {
+            $this->Disconnect();
+        }
+        catch (Exception $e)
+        {
+            die();
+        }
     }
 
     private function Connect() {

@@ -26,4 +26,3 @@ class AdvancedInfoController extends Object implements IController
         $view->Render();
     }
 }
-?>

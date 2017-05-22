@@ -5,4 +5,3 @@ interface IController
     public function actionIndex();
 }
 
-?>

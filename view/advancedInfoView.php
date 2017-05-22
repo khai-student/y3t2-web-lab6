@@ -39,7 +39,3 @@ class AdvancedInfoView extends Object implements IView
         require_once 'include/footer.php';
     }
 }
-
-
-
-?>

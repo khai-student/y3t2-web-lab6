@@ -3,11 +3,11 @@
 class Utilities
 {
     public function GetParam($param_name, $default = NULL) {
-        if (isset($_POST[$param_name])) {
-            return $_POST[$param_name];
-        }
         if (isset($_GET[$param_name])) {
             return $_GET[$param_name];
+        }
+        if (isset($_POST[$param_name])) {
+            return $_POST[$param_name];
         }
         else {
             return $default;
@@ -18,16 +18,16 @@ class Utilities
     {
         $result = [];
 
-        if (count($_POST) != 0)
+        if (count($_GET) != 0)
         {
-            foreach ($_POST as $key => $value)
+            foreach ($_GET as $key => $value)
             {
                 $result[$key] = $value;
             }
         }
         else
         {
-            foreach ($_GET as $key => $value)
+            foreach ($_POST as $key => $value)
             {
                 $result[$key] = $value;
             }
@@ -36,24 +36,53 @@ class Utilities
         return $result;
     }
 
-    public function headerLocation($location)
+    public function headerLocation($location, $params)
     {
         global $session;
 
         if ($session->isAuthorized())
         {
-            if (strpos($location, '?') === false)
+            if ($_SERVER['REQUEST_METHOD'] == 'GET')
             {
                 $location = $location.'?'.session_name().'='.session_id();
             }
             else
             {
-                $location = $location.'&'.session_name().'='.session_id();
+                $_SESSION['POST'][session_name()] = session_id();
+            }
+        }
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'GET')
+        {
+            if (strpos($location, '?'))
+            {
+                foreach ($params as $key => $value) {
+                    $location = $location.'&'.$key.'='.$value;
+                }
+                header('Location: '.$location, true, 301);
+            }
+            else
+            {
+                $question_mark_inserted = false;
+                foreach ($params as $key => $value) {
+                    if (!$question_mark_inserted) {
+                        $question_mark_inserted = true;
+                        $location = $location.'?'.$key.'='.$value;
+                    }
+                    else {
+                        $location = $location.'&'.$key.'='.$value;
+                    }
+                }
+                header('Location: '.$location, true, 301);
             }
         }
         else
         {
-            header($location);
+            foreach ($params as $key => $value) {
+                $_SESSION['POST'][$key] = $value;
+            }
+            $_SESSION['POST']['asdf'] = 'qwer';
+            header('Location: '.$location, true, 301);
         }
         
         die();
@@ -61,15 +90,13 @@ class Utilities
 
     public function error($error_msg, $debug_msg = '')
     {
-        if ($route == null) {
-            $controller = new ErrorController();
+        $controller = new ErrorController();
 
-            if (DEBUG_MODE && $debug_msg != '') {
-                $controller->printError($error_msg, $debug_msg);
-            } else {
-                $controller->printError($error_msg);
-            }
-            die();
+        if (DEBUG_MODE && $debug_msg != '') {
+            $controller->printError($error_msg, $debug_msg);
+        } else {
+            $controller->printError($error_msg);
         }
+        die();
     }
 }
