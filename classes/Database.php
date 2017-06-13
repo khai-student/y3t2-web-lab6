@@ -62,6 +62,10 @@ class Database
         return $this->mysqli->query($sql);
     }
 
+    public function MultiQuery($sql) {
+        return $this->mysqli->multi_query($sql);
+    }
+
     public function RealEscapeString($string) {
         if ($this->mysqli == null)
         {

@@ -59,11 +59,12 @@ class AuthController extends Object
         global $db;
         global $session;
         global $utilities;
-        // todo 
+
         $to_check = ['login', 'password', 'first_name', 'second_name', 'email'];
         foreach ($to_check as $var) {
             if ($this->$var == null || $this->$var == '')
             {
+                $this->msg = 'You did not set '.ucfirst(str_replace('_', ' ', $var));
                 $view = new SignUpView();
                 $view->data = $this->data;
                 $view->Render();
@@ -82,7 +83,11 @@ class AuthController extends Object
             ";
 
         if ($db->Insert($sql) != TRUE) {
-            $utilities->error('','Cannot to add user to DB.');
+            $this->msg = 'Cannot register user with such credentials. Either login or e-mail is not unique.';
+            $view = new SignUpView();
+            $view->data = $this->data;
+            $view->Render();
+            die();
         }
         //
         try

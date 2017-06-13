@@ -28,35 +28,104 @@ class AdminController extends Object implements IController
     public function actionEdit()
     {
         global $utilites;
-
-        // 
-        $model = new EditModel();
-        $model->data = $this->data;
-        try
+        if (!isset($this->new))
         {
-            if (isset($this->save)) // $this->save means that data was already edited
+            $utilites->error('400 Client error.');
+        }
+        //
+        $model = NULL;
+        $view = NULL;
+        switch ($this->new)
+        {
+            case 'item':
             {
-                $model->SaveChanges();
+                $model = new AddItemModel();
+                $this->data = array_merge($this->data, $model->getData());
+                $view = new AddItemView();
+                break;
             }
-            else
+            case 'property':
             {
-                $model->GetRecord();
+                $model = new AddPropertyModel();
+                $this->data = array_merge($this->data, $model->getData());
+                $view = new AddPropertyView();
+                break;
+            }
+            case 'article':
+            {
+                $view = new AddArticleView();
+                break;
+            }
+            case 'contacts':
+            {
+                $model = new ChangeContactsModel();
+                $this->data = array_merge($this->data, $model->selectContacts());
+                $view = new ChangeContactsView();
+                break;
+            }
+            default:
+            {
+                $utilites->error('400 Client Error.');
+                break;
             }
         }
-        catch (Exception $e)
-        {
-            $utilites->error($e->getMessage());
-        }
+        $view->data = $this->data;
+        $view->Render();
+    }
 
-        if (isset($this->save))
+    public function actionInsert()
+    {
+        global $utilites;
+        if (!isset($this->new))
         {
-            $view = new InfoMsgView();
+            $utilites->error('400 Client error.');
         }
-        else
+        $model = NULL;
+        $view = NULL;
+        switch ($this->new)
         {
-            $view = new EditView();
+            case 'item':
+            {
+                $this->data = array_merge($this->data, (new AddItemModel())->getData());
+                // inserting item
+                $model = new InsertItemModel();
+                $model->data = $this->data;
+                $this->data = array_merge($this->data, $model->getData());
+                $view = new AddItemView();
+                break;
+            }
+            case 'property':
+            {
+                $this->data = array_merge($this->data, (new AddPropertyModel())->getData());
+                // inserting item
+                $model = new InsertPropertyModel();
+                $model->data = $this->data;
+                $this->data = array_merge($this->data, $model->getData());
+                $view = new AddPropertyView();
+                break;
+            }
+            case 'article':
+            {
+                $model = new InsertArticleModel();
+                $model->data = $this->data;
+                $this->data = array_merge($this->data, $model->getData());
+                $view = new AddArticleView();
+                break;
+            }
+            case 'contacts':
+            {
+                $model = new ChangeContactsModel();
+                $model->data = $this->data;
+                $this->data = array_merge($this->data, $model->alterContacts());
+                $view = new ChangeContactsView();
+                break;
+            }
+            default:
+            {
+                $utilites->error('400 Client Error.');
+                break;
+            }
         }
-
         $view->data = $this->data;
         $view->Render();
     }

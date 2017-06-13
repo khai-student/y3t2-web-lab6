@@ -537,7 +537,7 @@ a img {
     font-weight: normal;
     line-height: 24px;
     margin: 22px 0;
-    padding: 0 11px 0 0;
+    padding: 0 11px 0 11px;
 }
 
 .body .services ul li div.img {
@@ -594,7 +594,7 @@ a img {
     font-weight: normal;
     line-height: 24px;
     margin: 22px 0;
-    padding: 0 11px 0 0;
+    padding: 0 11px 0 11px;
 }
 
 .body .portfolio ul {

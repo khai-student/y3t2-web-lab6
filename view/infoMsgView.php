@@ -13,15 +13,15 @@ class InfoMsgView extends Object implements IView
 
         echo '
             <div class="info-msg-view">
-            <span>'.$this->msg.'</span>
-            <form method="'.$_SERVER['REQUEST_METHOD'].'" action="/router.php" >';
+            <form method="'.$_SERVER['REQUEST_METHOD'].'" action="/router.php" >
+            <span class="info-msg">'.$this->msg.'</span>';
         
         foreach ($this->back as $key => $value) {
             echo '<input type="hidden" name="'.$key.'" value="'.$value.'">';
         }
 
         echo '
-                <button type="submit">Back</button>
+                <button class="btn btn-default" type="submit" default>Back</button>
             </form>
             </div>
         ';

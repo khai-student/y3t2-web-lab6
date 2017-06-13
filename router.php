@@ -24,9 +24,6 @@ switch (strtolower($route[0])) // controller name
     case 'section':
         $controller = new SectionController();
         break;
-    case 'advancedinfo':
-        $controller = new AdvancedInfoController();
-        break;
     case 'auth':
         $controller = new AuthController();
         break;
@@ -42,6 +39,9 @@ switch (strtolower($route[0])) // controller name
         }
         $controller = new AdminController();
         break;
+    case 'article':
+        $controller = new ArticleController();
+        break;
     default:
         $utilities->error('400 Wrong route');
         break;
@@ -52,12 +52,20 @@ switch (strtolower($route[1])) // action
     case 'index':
         $action = 'actionIndex';
         break;
+    case 'info':
+        if (is_a($controller, 'SectionController') == false && is_a($controller, 'ArticleController') == false)
+        {
+            $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
+        }
+        $action = 'actionInfo';
+        break;
     case 'edit':
         if (is_a($controller, 'AdminController') == false)
         {
             $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
         }
         $action = 'actionEdit';
+        break;
     case 'signin':
         if (strtolower($route[0]) == 'auth')
             $action = 'actionSignIn';
@@ -77,10 +85,18 @@ switch (strtolower($route[1])) // action
             $action = 'actionIndex';
         break;
     case 'delete':
+        if (is_a($controller, 'AdminController') == false)
+        {
+            $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
+        }
         $action = 'actionDelete';
         break;
-    case 'edit':
-        $action = 'actionEdit';
+    case 'insert':
+        if (is_a($controller, 'AdminController') == false)
+        {
+            $utilities->headerLocation('/router.php', ['r' => 'section/index', 'section' => 'strings']);
+        }
+        $action = 'actionInsert';
         break;
     default:
         $utilities->error("Don't touch URL!");

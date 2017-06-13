@@ -13,7 +13,7 @@
 <div class="border">
     <div class="page">
         <?php
-        require_once "sidebar.php";
+        require_once "sidebarAdminPanel.php";
         ?>
         <div class="body">
             <div>

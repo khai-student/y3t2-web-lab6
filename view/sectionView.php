@@ -19,11 +19,11 @@ class SectionView extends Object implements IView
         foreach ($this->model['items'] as $index => $item) {
             echo '
             <li>
-                <a href="/router.php?r=advancedInfo/index&item_id='.$item['id'].'">
+                <a href="/router.php?r=section/info&item_id='.$item['id'].'">
                     <img src="/php/imageGetter.php?item_id='.$item['id'].'" alt="There should be an image">
                 </a> 
                 <span>'.$item['title'].'</span>
-                <a href="/router.php?r=advancedInfo/index&item_id='.$item['id'].'">Read Details</a>
+                <a href="/router.php?r=section/info&item_id='.$item['id'].'">Read Details</a>
             </li>
             ';
         }

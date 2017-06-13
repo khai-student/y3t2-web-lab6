@@ -26,7 +26,7 @@ echo '
 
 echo '
     <li>
-        <a href="/router.php?r=news/index">News</a>
+        <a href="/router.php?r=article/index">Articles</a>
     </li>
 ';
 

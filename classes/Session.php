@@ -124,7 +124,7 @@ class Session extends Object
         date_add($php_date, date_interval_create_from_date_string('1 day'));
 
         if ($php_date < (new DateTime('now'))) {
-            end();
+            $this->end();
             return false;
         }
         return true;
